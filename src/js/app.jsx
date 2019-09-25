@@ -29,6 +29,7 @@ export default class App extends React.Component {
     return (
       <div className='container'>
         <div name='input' id='input'>
+          <h3>Mortgage Calculator</h3>
           <input name='balance' type='number' value={this.state.balance} onChange={this.changeInput}/>
           <input name='rate' type="number" step='0.01' value={this.state.rate} onChange={this.changeInput}/>
           <select name="term" value={this.state.term} onChange={this.changeInput}>
