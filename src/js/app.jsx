@@ -8,21 +8,22 @@ export default class App extends React.Component {
       balance: 0,
       rate: 0,
       term: 15,
-      submit: 0,
-    }
+    };
+    this.changeInput = this.changeInput.bind(this);
+    this.calculate = this.calculate.bind(this);
   }
-  changeInput(event) {
-    event.preventDefault(
-    this.setState({value: event.target.value})
-    )
+
+  changeInput(object) { //in online examples object is listed as event and wanted to see if the code would break if I changed it. As long as the same var name appears as a parameter in the function it seems to work just fine.
+    this.setState({[object.target.name] : [object.target.value]})
   }
 
   calculate(){
-    //I must calculate the mortgage monthly payment. I must know rate, balance and term.
-    var rate = (this.state.rate)/12*100;
-    console.log(rate);
+    let rate = (this.state.rate)/100/12;
+    let term = (this.state.term) * 12;
+    let balance = (this.state.balance);
+    let monthlyPayment = (balance*(rate*Math.pow((1+rate ),term )/(Math.pow(1+rate,term)-1))).toFixed(2);
+    this.setState({submit: monthlyPayment});
   }
-
 
   render() {
     return (
@@ -34,11 +35,9 @@ export default class App extends React.Component {
             <option value="15">15</option>
             <option value="30">30</option>
           </select>
-            <button name='submit' value={this.state.sumbit}>submit</button>
-
+          <button name='submit' onClick={this.calculate}>submit</button>
         </div>
-        <div name='output' id ='output'>
-        </div>
+        <div id='output' name='output'> ${this.state.submit} is your payment. </div> 
       </div>
     );
   }
